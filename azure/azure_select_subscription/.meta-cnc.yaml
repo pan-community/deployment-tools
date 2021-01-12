@@ -1,6 +1,6 @@
-name: prisma_access_azure_select_subscription
+name: azure_select_subscription
 
-label: Prisma Access Azure Select Subscription
+label: Azure Select Subscription
 
 description: Choose your Default Azure Subscription
 
