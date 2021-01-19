@@ -1,3 +1,19 @@
+# Copyright (c) 2018, Palo Alto Networks
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+# Author: Nathan Embery nembery@paloaltonetworks.com
+
 import io
 import json
 import sys
@@ -14,7 +30,8 @@ get_default_cli().invoke(['account', "show"], out_file=is_logged_in_output)
 if 'environmentName' not in is_logged_in_output.getvalue():
     get_default_cli().invoke(['login', "--use-device-code"], out_file=sys.stdout)
 
-get_default_cli().invoke(['account', "list"], out_file=output)
+# capture return code for issue #1
+r = get_default_cli().invoke(['account', "list"], out_file=output)
 
 accounts_str = output.getvalue()
 try:
@@ -33,3 +50,5 @@ try:
 except ValueError:
     print('Could not get list of accounts in Azure')
     sys.exit(1)
+
+sys.exit(r)
